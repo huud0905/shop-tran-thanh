@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>Tra cứu đơn hàng — SHOP Trần Thành</title>
+  <meta name="description" content="Tra cứu trạng thái đơn hàng, đơn vị vận chuyển và mã vận đơn tại SHOP Trần Thành bằng số điện thoại." />
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366f1'/%3E%3Cpath d='M9 11l2-3h10l2 3v12a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2V11z' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M9 11h14M13 14a3 3 0 0 0 6 0' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <script>
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Trang chủ SHOP Trần Thành">
+        <span class="brand-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+            <path d="M3 6h18" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong class="brand-name">SHOP Trần Thành</strong>
+          <span class="brand-tagline">Tra cứu vận đơn</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <button type="button" id="theme-toggle" class="icon-btn" aria-label="Chuyển chế độ sáng/tối" title="Chuyển giao diện sáng/tối">
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          </svg>
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          </svg>
+        </button>
+
+        <a href="index.html" class="btn btn-outline back-store-btn">
+          <span>← Quay lại cửa hàng</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content tracking-main">
+    <section class="tracking-hero" aria-label="Tra cứu đơn hàng">
+      <span class="hero-eyebrow">Theo dõi hành trình &bull; Minh bạch 24/7</span>
+      <h1 class="hero-title">Tra cứu đơn hàng &amp; Vận đơn</h1>
+      <p class="hero-subtitle">Nhập số điện thoại bạn đã dùng khi đặt hàng để xem tiến độ xử lý và mã vận đơn từ hãng giao hàng.</p>
+    </section>
+
+    <section class="tracking-search-card" aria-label="Tìm kiếm đơn hàng theo số điện thoại">
+      <form id="tracking-search-form" class="tracking-search-form" novalidate>
+        <div class="tracking-input-wrap">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          <input
+            type="tel"
+            id="tracking-phone-input"
+            class="search-input tracking-phone-input"
+            inputmode="numeric"
+            autocomplete="tel"
+            placeholder="Nhập số điện thoại đã đặt hàng (VD: 0901234567)"
+            aria-label="Số điện thoại đặt hàng"
+            required
+          />
+          <button
+            type="button"
+            id="tracking-phone-clear"
+            class="search-clear-btn"
+            aria-label="Xóa số điện thoại"
+            hidden
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <button type="submit" id="tracking-submit-btn" class="btn btn-primary tracking-submit-btn">
+          <span class="btn-spinner" aria-hidden="true" hidden></span>
+          <span class="btn-label">Tra cứu đơn hàng</span>
+        </button>
+      </form>
+
+      <div id="recent-orders-section" class="tracking-suggestions" hidden>
+        <div class="tracking-suggestions-head">
+          <span class="tracking-suggestions-label">Đơn đã đặt gần đây trên thiết bị này:</span>
+          <button type="button" id="recent-orders-clear" class="tracking-suggestions-clear">Xóa gợi ý</button>
+        </div>
+        <div id="recent-orders-list" class="tracking-suggestions-list"></div>
+      </div>
+    </section>
+
+    <section id="tracking-initial-state" class="tracking-placeholder-state">
+      <div class="empty-icon" aria-hidden="true">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13" rx="2" />
+          <path d="M16 8h4l3 3v5h-7V8z" />
+          <circle cx="5.5" cy="18.5" r="2.5" />
+          <circle cx="18.5" cy="18.5" r="2.5" />
+        </svg>
+      </div>
+      <h2 class="empty-title">Nhập số điện thoại để bắt đầu tra cứu</h2>
+      <p class="empty-desc">Hệ thống sẽ hiển thị toàn bộ đơn hàng liên kết với số điện thoại của bạn kèm mã vận đơn (nếu đã gửi hàng).</p>
+    </section>
+
+    <section id="tracking-results-section" aria-live="polite" hidden>
+      <div id="tracking-results-meta" class="tracking-results-meta"></div>
+      <div id="tracking-results" class="tracking-results-list"></div>
+    </section>
+
+    <section id="tracking-empty-state" class="empty-state" hidden>
+      <div class="empty-icon" aria-hidden="true">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.3-4.3" />
+          <path d="M8 11h6" />
+        </svg>
+      </div>
+      <h2 class="empty-title">Không tìm thấy đơn hàng nào liên kết với số điện thoại này</h2>
+      <p class="empty-desc">Vui lòng kiểm tra lại số điện thoại đã nhập hoặc liên hệ trực tiếp với shop để được hỗ trợ kiểm tra đơn hàng.</p>
+      <a href="index.html" class="btn btn-secondary">← Quay lại cửa hàng</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-info">
+        <strong class="footer-brand">SHOP Trần Thành</strong>
+        <p class="footer-desc">Thanh lý &amp; Sang nhượng đồ dùng cá nhân chính hãng, uy tín &bull; Ship COD toàn quốc.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://www.facebook.com/tran.thanh.574550" target="_blank" rel="noopener noreferrer" class="social-link">Facebook</a>
+        <a href="https://zalo.me" target="_blank" rel="noopener noreferrer" class="social-link">Zalo</a>
+        <a href="index.html" class="social-link">Cửa hàng</a>
+        <a href="admin.html" class="social-link">Quản trị</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 SHOP Trần Thành. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <div id="cancel-order-modal" class="cancel-modal-overlay" hidden>
+    <div class="cancel-modal-card" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title">
+      <div class="cancel-modal-header">
+        <h3 id="cancel-modal-title" class="cancel-modal-title">Xác nhận Hủy Đơn Hàng</h3>
+        <button type="button" id="cancel-modal-close-btn" class="cancel-modal-close" aria-label="Đóng">✕</button>
+      </div>
+      <form id="cancel-order-form" class="cancel-modal-form" autocomplete="off">
+        <input type="hidden" id="cancel-order-id" />
+        <p class="cancel-modal-desc">
+          Để bảo vệ đơn hàng của bạn, vui lòng nhập chính xác <strong>Họ tên người nhận</strong> và <strong>Số điện thoại</strong> đã dùng khi đặt hàng.
+        </p>
+
+        <div class="form-group">
+          <label for="cancel-reason-select" class="form-label">Lý do hủy đơn <span class="required-mark">*</span></label>
+          <select id="cancel-reason-select" class="form-control" required>
+            <option value="Đặt nhầm sản phẩm / số lượng">Đặt nhầm sản phẩm / số lượng</option>
+            <option value="Muốn thay đổi địa chỉ / số điện thoại">Muốn thay đổi địa chỉ / số điện thoại</option>
+            <option value="Không còn nhu cầu mua nữa">Không còn nhu cầu mua nữa</option>
+            <option value="Tìm thấy giá tốt hơn nơi khác">Tìm thấy giá tốt hơn nơi khác</option>
+            <option value="other">Lý do khác...</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="cancel-reason-other-wrap" hidden>
+          <label for="cancel-reason-other" class="form-label">Chi tiết lý do khác <span class="required-mark">*</span></label>
+          <textarea id="cancel-reason-other" class="form-control" rows="2" placeholder="Nhập lý do hủy của bạn..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="cancel-customer-name" class="form-label">Xác nhận Họ và tên người nhận <span class="required-mark">*</span></label>
+          <input
+            type="text"
+            id="cancel-customer-name"
+            class="form-control"
+            required
+            autocomplete="off"
+            placeholder="Nhập đúng họ tên lúc đặt hàng"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="cancel-phone" class="form-label">Xác nhận Số điện thoại đặt hàng <span class="required-mark">*</span></label>
+          <input
+            type="tel"
+            inputmode="numeric"
+            id="cancel-phone"
+            class="form-control"
+            required
+            maxlength="10"
+            autocomplete="off"
+            placeholder="Nhập lại 10 số điện thoại đặt hàng"
+          />
+          <small class="form-hint">Nhập đúng 10 số điện thoại dùng khi đặt đơn hàng này.</small>
+        </div>
+
+        <p id="cancel-modal-error" class="form-error-box" role="alert" hidden></p>
+
+        <div class="cancel-modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-modal-back-btn">Quay lại</button>
+          <button type="submit" class="btn btn-danger" id="confirm-cancel-submit-btn">Xác nhận hủy đơn</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="./js/tracking.js"></script>
+</body>
+</html>

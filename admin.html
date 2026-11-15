@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>SHOP Trần Thành — Quản trị hệ thống</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+</head>
+<body>
+  <!-- Màn hình đăng nhập (Center Card) -->
+  <div id="login-overlay" class="login-overlay" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <div class="login-card">
+      <div class="login-brand">
+        <span class="login-logo" aria-hidden="true">🛍️</span>
+        <div>
+          <h1 id="login-title" class="login-title">SHOP Trần Thành</h1>
+          <p class="login-subtitle">Đăng nhập dành cho chủ cửa hàng</p>
+        </div>
+      </div>
+
+      <form id="login-form" class="login-form" novalidate>
+        <div class="form-group">
+          <label for="admin-token-input" class="form-label">Admin Token</label>
+          <div class="input-with-toggle">
+            <input
+              type="password"
+              id="admin-token-input"
+              class="form-control"
+              placeholder="Nhập Admin Token..."
+              autocomplete="current-password"
+              required
+            />
+            <button type="button" id="toggle-password-btn" class="btn-toggle-password" aria-label="Hiện/Ẩn mật khẩu" aria-pressed="false">
+              <span class="toggle-icon" aria-hidden="true">👁️</span>
+            </button>
+          </div>
+          <p id="login-error" class="form-error" role="alert" hidden></p>
+        </div>
+
+        <div class="form-group form-check">
+          <input type="checkbox" id="remember-me" class="form-check-input" />
+          <label for="remember-me" class="form-check-label">Ghi nhớ đăng nhập trên thiết bị này</label>
+        </div>
+
+        <button type="submit" id="login-submit-btn" class="btn btn-primary btn-block">
+          <span class="btn-text">Đăng nhập</span>
+          <span class="btn-loading" hidden>Đang kiểm tra...</span>
+        </button>
+      </form>
+
+      <p class="login-footer">
+        <a href="index.html" class="link-back">← Quay lại trang cửa hàng</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Giao diện Dashboard chính -->
+  <div id="admin-app" class="admin-app" hidden>
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="header-left">
+        <span class="brand-icon" aria-hidden="true">🛍️</span>
+        <span class="brand-name">SHOP Trần Thành — Quản trị</span>
+      </div>
+      <div class="header-actions">
+        <button
+          type="button"
+          id="theme-toggle-btn"
+          class="btn btn-ghost btn-icon"
+          title="Chuyển giao diện Sáng/Tối"
+          aria-label="Chuyển giao diện Sáng/Tối"
+        >
+          <span id="theme-icon">🌙</span>
+        </button>
+        <button type="button" id="logout-btn" class="btn btn-outline btn-sm">
+          Đăng xuất
+        </button>
+      </div>
+    </header>
+
+    <div class="admin-body">
+      <!-- Sidebar (Desktop/Tablet) & Bottom Tab Bar (Mobile) -->
+      <nav class="admin-nav" aria-label="Điều hướng quản trị">
+        <button
+          type="button"
+          class="nav-tab is-active"
+          data-tab="products"
+          aria-selected="true"
+        >
+          <span class="nav-icon" aria-hidden="true">📦</span>
+          <span class="nav-label">Sản phẩm</span>
+        </button>
+
+        <button
+          type="button"
+          class="nav-tab"
+          data-tab="orders"
+          aria-selected="false"
+        >
+          <span class="nav-icon" aria-hidden="true">🛒</span>
+          <span class="nav-label">Đơn hàng</span>
+          <span id="pending-orders-badge" class="nav-badge" hidden>0</span>
+        </button>
+      </nav>
+
+      <!-- Nội dung chính -->
+      <main class="admin-main">
+        <!-- TAB 1: QUẢN LÝ SẢN PHẨM -->
+        <section id="tab-products" class="tab-panel is-active" aria-labelledby="products-heading">
+          <div class="panel-header">
+            <div>
+              <h2 id="products-heading" class="panel-title">Quản lý sản phẩm</h2>
+              <p class="panel-subtitle">Hệ thống quản lý sản phẩm, hình ảnh &amp; đơn hàng</p>
+            </div>
+            <button type="button" id="add-product-btn" class="btn btn-primary">
+              <span>➕</span> Thêm sản phẩm
+            </button>
+          </div>
+
+          <!-- Toolbar tìm kiếm & lọc -->
+          <div class="toolbar">
+            <div class="toolbar-search">
+              <input
+                type="search"
+                id="product-search-input"
+                class="form-control"
+                placeholder="Tìm theo tên sản phẩm..."
+                aria-label="Tìm kiếm sản phẩm"
+              />
+            </div>
+
+            <div class="toolbar-filters">
+              <select id="product-status-filter" class="form-control" aria-label="Lọc theo trạng thái">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="available">Còn hàng</option>
+                <option value="sold">Đã bán</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Bảng sản phẩm (Desktop) / Card List (Mobile) -->
+          <div class="card table-card">
+            <div class="table-responsive">
+              <table class="data-table data-table-products">
+                <thead>
+                  <tr>
+                    <th>Ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Trạng thái</th>
+                    <th class="text-right">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="products-tbody">
+                  <tr class="is-empty-row">
+                    <td colspan="5" class="table-empty">Đang tải dữ liệu...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Phân trang -->
+            <div id="products-pagination" class="pagination" hidden>
+              <span id="pagination-info" class="pagination-info"></span>
+              <div class="pagination-controls">
+                <button type="button" id="prev-page-btn" class="btn btn-outline btn-sm">← Trước</button>
+                <span id="page-indicator" class="page-indicator">1 / 1</span>
+                <button type="button" id="next-page-btn" class="btn btn-outline btn-sm">Sau →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: QUẢN LÝ ĐƠN HÀNG -->
+        <section id="tab-orders" class="tab-panel" aria-labelledby="orders-heading" hidden>
+          <div class="panel-header">
+            <h2 id="orders-heading" class="panel-title">Quản lý đơn hàng</h2>
+            <button type="button" id="refresh-orders-btn" class="btn btn-outline btn-sm">
+              ↻ Làm mới
+            </button>
+          </div>
+
+          <!-- Bộ lọc trạng thái đơn -->
+          <div class="status-pills" id="order-status-filters" role="group" aria-label="Lọc đơn hàng theo trạng thái">
+            <button type="button" class="pill-btn is-active" data-status="all">Tất cả</button>
+            <button type="button" class="pill-btn" data-status="pending">Chờ duyệt</button>
+            <button type="button" class="pill-btn" data-status="confirmed">Đã xác nhận</button>
+            <button type="button" class="pill-btn" data-status="completed">Hoàn thành</button>
+            <button type="button" class="pill-btn" data-status="cancelled">Đã hủy</button>
+          </div>
+
+          <!-- Bảng đơn hàng (Desktop) / Card List (Mobile) -->
+          <div class="card table-card">
+            <div class="table-responsive">
+              <table class="data-table data-table-clickable data-table-orders">
+                <thead>
+                  <tr>
+                    <th>Mã đơn</th>
+                    <th>Thời gian</th>
+                    <th>Khách hàng</th>
+                    <th>SĐT</th>
+                    <th>Địa chỉ</th>
+                    <th>Sản phẩm</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th class="text-right">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-tbody">
+                  <tr class="is-empty-row">
+                    <td colspan="9" class="table-empty">Đang tải đơn hàng...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL THÊM / SỬA SẢN PHẨM -->
+  <div id="product-modal" class="modal-backdrop modal-fullscreen-mobile" role="dialog" aria-modal="true" aria-labelledby="product-modal-title" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="product-modal-title" class="modal-title">Thêm sản phẩm</h3>
+        <button type="button" id="close-product-modal-btn" class="btn-close" aria-label="Đóng">✕</button>
+      </div>
+
+      <form id="product-form" class="modal-body" novalidate>
+        <input type="hidden" id="product-id-input" />
+
+        <div class="form-group">
+          <label for="product-name-input" class="form-label">Tên sản phẩm <span class="required">*</span></label>
+          <input type="text" id="product-name-input" class="form-control" placeholder="VD: iPhone 14 Pro 128GB" required />
+          <p id="error-product-name" class="form-error" hidden></p>
+        </div>
+
+        <div class="form-group">
+          <label for="product-price-input" class="form-label">Giá (VNĐ) <span class="required">*</span></label>
+          <input type="text" id="product-price-input" class="form-control" inputmode="numeric" autocomplete="off" placeholder="VD: 1.500.000" required />
+          <span id="price-preview-label" class="form-hint" hidden></span>
+          <p id="error-product-price" class="form-error" hidden></p>
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <span class="form-label">Trạng thái</span>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="product-status" value="available" checked />
+                <span>Còn hàng</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="product-status" value="sold" />
+                <span>Đã bán</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="stock-form-group" class="form-group">
+            <label for="product-stock-input" class="form-label">Số lượng còn lại <span class="required">*</span></label>
+            <input type="number" id="product-stock-input" class="form-control" min="1" step="1" value="1" placeholder="Nhập số lượng" required />
+            <p id="error-product-stock" class="form-error" hidden></p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="product-desc-input" class="form-label">Mô tả</label>
+          <textarea id="product-desc-input" class="form-control" rows="3" placeholder="Tình trạng đồ, bảo hành, phụ kiện đi kèm..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="product-images-input" class="form-label">
+            Ảnh sản phẩm <span class="label-hint">(Tối đa 10 ảnh)</span>
+          </label>
+          <input
+            type="file"
+            id="product-images-input"
+            class="form-control form-file"
+            accept="image/*"
+            multiple
+          />
+          <p id="error-product-images" class="form-error" hidden></p>
+          <div id="image-preview-grid" class="image-preview-grid"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="product-urls-input" class="form-label">
+            URL ảnh thủ công <span class="label-hint">(Mỗi dòng 1 URL — dùng khi chưa cấu hình R2)</span>
+          </label>
+          <textarea
+            id="product-urls-input"
+            class="form-control"
+            rows="2"
+            placeholder="https://example.com/anh-1.jpg&#10;https://example.com/anh-2.jpg"
+          ></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancel-product-modal-btn" class="btn btn-outline">Hủy</button>
+          <button type="submit" id="save-product-btn" class="btn btn-primary">Lưu sản phẩm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SLIDE-IN PANEL CHI TIẾT ĐƠN HÀNG -->
+  <div id="order-drawer-backdrop" class="drawer-backdrop" hidden>
+    <aside id="order-drawer" class="order-drawer" role="dialog" aria-modal="true" aria-labelledby="order-drawer-title">
+      <div class="drawer-header">
+        <div>
+          <h3 id="order-drawer-title" class="modal-title">Chi tiết đơn hàng</h3>
+          <p id="order-drawer-subtitle" class="drawer-subtitle"></p>
+        </div>
+        <button type="button" id="close-order-drawer-btn" class="btn-close" aria-label="Đóng">✕</button>
+      </div>
+      <div id="order-drawer-body" class="drawer-body"></div>
+      <div id="order-drawer-footer" class="drawer-footer"></div>
+    </aside>
+  </div>
+
+  <!-- CONFIRM DIALOG -->
+  <div id="confirm-modal" class="modal-backdrop modal-backdrop-top" role="alertdialog" aria-modal="true" aria-labelledby="confirm-message" hidden>
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title">Xác nhận thao tác</h3>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-message" class="confirm-text"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="confirm-cancel-btn" class="btn btn-outline">Hủy bỏ</button>
+        <button type="button" id="confirm-ok-btn" class="btn btn-danger">Đồng ý</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

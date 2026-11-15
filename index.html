@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>SHOP Trần Thành</title>
+  <meta name="description" content="Mua bán IC chính hãng, uy tín tại SHOP Trần Thành." />
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366f1'/%3E%3Cpath d='M9 11l2-3h10l2 3v12a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2V11z' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M9 11h14M13 14a3 3 0 0 0 6 0' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/variables.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <script>
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="./" class="brand" aria-label="Trang chủ SHOP Trần Thành">
+        <span class="brand-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+            <path d="M3 6h18" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong class="brand-name">SHOP Trần Thành</strong>
+          <span class="brand-tagline">Cửa hàng đồ cá nhân</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <a href="tracking.html" class="nav-link-tracking" title="Tra cứu đơn hàng &amp; vận đơn">🚚 Tra cứu đơn</a>
+
+        <button type="button" id="theme-toggle" class="icon-btn" aria-label="Chuyển chế độ sáng/tối" title="Chuyển giao diện sáng/tối">
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          </svg>
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          </svg>
+        </button>
+
+        <button type="button" id="cart-open-btn" class="cart-trigger" aria-label="Mở giỏ hàng">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="8" cy="21" r="1" />
+            <circle cx="19" cy="21" r="1" />
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+          </svg>
+          <span class="cart-trigger-label">Giỏ hàng</span>
+          <span id="cart-badge" class="cart-badge" hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <section class="hero-intro" aria-label="Giới thiệu cửa hàng">
+      <div class="hero-copy">
+        <span class="hero-eyebrow">Chính hãng &bull; Minh bạch &bull; Giao nhanh</span>
+        <h1 class="hero-title">SHOP Trần Thành</h1>
+        <p class="hero-subtitle">Mua bán IC chính hãng, uy tín tại SHOP Trần Thành.</p>
+      </div>
+      <div class="hero-stats" id="catalog-summary" aria-live="polite"></div>
+    </section>
+
+    <section class="filter-bar" aria-label="Tìm kiếm và bộ lọc đa điều kiện">
+      <div class="filter-top-row">
+        <div class="search-field">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Tìm theo tên hoặc mô tả (hỗ trợ không dấu)..."
+            autocomplete="off"
+            aria-label="Tìm kiếm sản phẩm"
+          />
+          <button
+            type="button"
+            id="search-clear-btn"
+            class="search-clear-btn"
+            aria-label="Xóa từ khóa tìm kiếm"
+            hidden
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="filter-controls-inline">
+          <button
+            type="button"
+            id="mobile-filter-open-btn"
+            class="btn btn-outline btn-filter-trigger"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="filter-sheet"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+            </svg>
+            <span>Bộ lọc</span>
+            <span id="active-filter-badge" class="filter-badge" hidden>0</span>
+          </button>
+
+          <div class="sort-field">
+            <label for="sort-select" class="sort-label">Sắp xếp</label>
+            <select id="sort-select" class="sort-select" aria-label="Sắp xếp sản phẩm">
+              <option value="newest">Mới nhất</option>
+              <option value="price-asc">Giá tăng dần</option>
+              <option value="price-desc">Giá giảm dần</option>
+              <option value="name-asc">Tên A → Z</option>
+            </select>
+          </div>
+
+          <button type="button" id="clear-filters-btn" class="clear-filters-btn" disabled>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+            <span>Xóa lọc</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="filter-sheet-overlay" class="sheet-overlay" hidden></div>
+
+      <div
+        id="filter-sheet"
+        class="filter-sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="filter-sheet-title"
+        aria-hidden="true"
+      >
+        <div class="filter-sheet-header">
+          <div class="sheet-drag-bar" aria-hidden="true"></div>
+          <div class="filter-sheet-title-row">
+            <h2 id="filter-sheet-title" class="filter-sheet-title">Bộ lọc tìm kiếm</h2>
+            <div class="filter-sheet-head-actions">
+              <button type="button" id="sheet-clear-filters-btn" class="sheet-clear-btn">
+                Xóa tất cả
+              </button>
+              <button type="button" id="filter-sheet-close-btn" class="icon-btn sheet-close-btn" aria-label="Đóng bộ lọc">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-sheet-body">
+          <div class="filter-group-row filter-group-price">
+            <span class="filter-group-label">Khoảng giá</span>
+            <div class="price-filter-wrap">
+              <div id="price-presets" class="price-presets" role="group" aria-label="Chọn nhanh khoảng giá">
+                <button type="button" class="chip-btn is-active" data-price-preset="all">Tất cả mức giá</button>
+                <button type="button" class="chip-btn" data-price-preset="under-500k">Dưới 500k</button>
+                <button type="button" class="chip-btn" data-price-preset="500k-2m">500k - 2 triệu</button>
+                <button type="button" class="chip-btn" data-price-preset="2m-5m">2 triệu - 5 triệu</button>
+                <button type="button" class="chip-btn" data-price-preset="over-5m">Trên 5 triệu</button>
+              </div>
+
+              <div class="price-inputs" aria-label="Nhập khoảng giá thủ công">
+                <input
+                  type="text"
+                  id="price-min"
+                  class="price-input"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="Từ giá (VNĐ)"
+                  aria-label="Từ giá (VNĐ)"
+                />
+                <span class="price-separator" aria-hidden="true">—</span>
+                <input
+                  type="text"
+                  id="price-max"
+                  class="price-input"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="Đến giá (VNĐ)"
+                  aria-label="Đến giá (VNĐ)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-group-row filter-group-status">
+            <span class="filter-group-label">Tình trạng</span>
+            <div class="status-filter" role="radiogroup" aria-label="Lọc theo tình trạng">
+              <label class="status-pill">
+                <input type="radio" name="status-filter" value="all" checked />
+                <span>Tất cả</span>
+              </label>
+              <label class="status-pill">
+                <input type="radio" name="status-filter" value="available" />
+                <span>Còn hàng</span>
+              </label>
+              <label class="status-pill">
+                <input type="radio" name="status-filter" value="sold" />
+                <span>Đã bán</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-sheet-footer">
+          <button type="button" id="filter-sheet-apply-btn" class="btn btn-primary btn-full">
+            Xem 0 sản phẩm
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-meta-row">
+        <p id="results-count" class="results-count" aria-live="polite">Tìm thấy 0 sản phẩm</p>
+      </div>
+    </section>
+
+    <section id="product-catalog-section" aria-label="Danh sách sản phẩm">
+      <div id="product-grid" class="product-grid"></div>
+
+      <div id="empty-state" class="empty-state" hidden>
+        <div class="empty-icon" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+            <path d="M8 11h6" />
+          </svg>
+        </div>
+        <h2 class="empty-title">Không tìm thấy sản phẩm phù hợp</h2>
+        <p class="empty-desc">Thử thay đổi từ khóa tìm kiếm, khoảng giá hoặc xóa bộ lọc để xem toàn bộ sản phẩm.</p>
+        <button type="button" id="empty-reset-btn" class="btn btn-secondary">Xem tất cả sản phẩm</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-info">
+        <strong class="footer-brand">SHOP Trần Thành</strong>
+        <p class="footer-desc">Mua bán IC chính hãng, uy tín tại SHOP Trần Thành. &bull; Ship COD toàn quốc.</p>
+      </div>
+      <div class="footer-links">
+        <a href="tracking.html" class="social-link">Tra cứu vận đơn</a>
+        <a href="https://www.facebook.com/tran.thanh.574550" target="_blank" rel="noopener noreferrer" class="social-link">Facebook</a>
+        <a href="https://zalo.me" target="_blank" rel="noopener noreferrer" class="social-link">Zalo</a>
+        <a href="admin.html" class="social-link">Quản trị</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 SHOP Trần Thành. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="product-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-product-name" hidden>
+    <div class="modal-dialog">
+      <div class="modal-sheet-top">
+        <div class="sheet-drag-bar modal-drag-bar" aria-hidden="true"></div>
+        <button type="button" id="modal-close-btn" class="modal-close" aria-label="Đóng chi tiết sản phẩm">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-gallery">
+          <div class="modal-main-image-wrap">
+            <div id="modal-image-track" class="modal-image-track" aria-label="Thư viện ảnh sản phẩm"></div>
+          </div>
+          <div id="modal-gallery-dots" class="modal-gallery-dots" aria-hidden="true"></div>
+          <div id="modal-thumbnails" class="modal-thumbnails" aria-label="Ảnh thu nhỏ sản phẩm"></div>
+        </div>
+
+        <div class="modal-details">
+          <div class="modal-meta-row">
+            <span id="modal-status" class="status-badge"></span>
+            <span id="modal-stock" class="modal-stock"></span>
+          </div>
+
+          <h2 id="modal-product-name" class="modal-title"></h2>
+          <div id="modal-price" class="modal-price"></div>
+
+          <div class="modal-description-wrap">
+            <h3 class="modal-section-label">Mô tả chi tiết</h3>
+            <p id="modal-description" class="modal-description"></p>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="modal-add-to-cart" class="btn btn-secondary">Thêm vào giỏ hàng</button>
+            <button type="button" id="modal-buy-now" class="btn btn-primary">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="cart-overlay" class="drawer-overlay" hidden></div>
+  <aside id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-drawer-title" aria-hidden="true">
+    <div class="drawer-header">
+      <h2 id="cart-drawer-title" class="drawer-title">Giỏ hàng của bạn</h2>
+      <button type="button" id="cart-close-btn" class="icon-btn" aria-label="Đóng giỏ hàng">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="cart-scroll-body" class="drawer-body">
+      <div id="cart-items-list" class="cart-items-list"></div>
+
+      <div id="cart-empty" class="cart-empty" hidden>
+        <p class="cart-empty-text">Giỏ hàng đang trống.</p>
+        <p class="cart-empty-hint">Hãy chọn một sản phẩm còn hàng để thêm vào giỏ nhé.</p>
+      </div>
+
+      <div id="cart-checkout-section" class="cart-checkout-section" hidden>
+        <div id="cart-oos-warning" class="cart-oos-warning" role="alert" hidden></div>
+
+        <div class="cart-summary">
+          <div class="cart-summary-row">
+            <span class="cart-summary-label">Tạm tính tiền hàng:</span>
+            <span id="cart-subtotal-amount" class="cart-summary-subtotal">0 ₫</span>
+          </div>
+          <div class="cart-summary-row">
+            <span class="cart-summary-label">Phí vận chuyển:</span>
+            <span id="cart-shipping-fee" class="cart-summary-shipping">19.000 ₫</span>
+          </div>
+          <div class="cart-shipping-note">
+            <span class="shipping-note-icon">🚚</span>
+            <span>Gộp nhiều sản phẩm cùng người nhận & địa chỉ chỉ tính 1 lần phí ship 19.000 đ</span>
+          </div>
+          <div class="cart-summary-row cart-summary-total-row">
+            <span class="cart-summary-label">Tổng thanh toán:</span>
+            <strong id="cart-total-amount" class="cart-summary-value">0 ₫</strong>
+          </div>
+        </div>
+
+        <form id="checkout-form" class="checkout-form" novalidate>
+          <h3 class="checkout-heading">Thông tin nhận hàng</h3>
+
+          <div class="form-group">
+            <label for="customer-name" class="form-label">Họ tên <span class="required-mark">*</span></label>
+            <input type="text" id="customer-name" name="customerName" class="form-control" placeholder="Nguyễn Văn A" required autocomplete="name" />
+          </div>
+
+          <div class="form-group">
+            <label for="customer-phone" class="form-label">Số điện thoại <span class="required-mark">*</span></label>
+            <input type="tel" id="customer-phone" name="phone" class="form-control" placeholder="0901234567" pattern="[0-9]{10}" inputmode="numeric" maxlength="10" title="Vui lòng nhập số điện thoại gồm đúng 10 chữ số" required autocomplete="tel" />
+          </div>
+
+          <div class="form-group">
+            <label for="customer-province" class="form-label">Tỉnh / Thành phố <span class="required-mark">*</span></label>
+            <select id="customer-province" name="province" class="form-control" required>
+              <option value="">-- Đang tải Tỉnh / Thành phố... --</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-ward" class="form-label">Xã / Phường / Đặc khu <span class="required-mark">*</span></label>
+            <select id="customer-ward" name="ward" class="form-control" required disabled>
+              <option value="">-- Chọn Xã / Phường / Đặc khu --</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-address-detail" class="form-label">Địa chỉ chi tiết <span class="required-mark">*</span></label>
+            <input
+              type="text"
+              id="customer-address-detail"
+              name="addressDetail"
+              class="form-control"
+              placeholder="Số nhà, tên đường, thôn/xóm/tổ dân phố..."
+              required
+            />
+          </div>
+
+          <div id="address-preview" class="address-preview" hidden>
+            <span class="preview-icon" aria-hidden="true">📍</span>
+            <span id="address-preview-text" class="preview-text"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-note" class="form-label">Ghi chú (tùy chọn)</label>
+            <textarea id="customer-note" name="note" class="form-control form-textarea" rows="2" placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao..."></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="cart-drawer-footer" class="drawer-footer" hidden>
+      <div class="drawer-footer-total">
+        <span class="drawer-footer-label">Tổng cộng</span>
+        <strong id="cart-footer-amount" class="drawer-footer-value">0 ₫</strong>
+      </div>
+      <button type="submit" form="checkout-form" id="submit-order-btn" class="btn btn-primary btn-full drawer-submit-btn">
+        Đặt hàng ngay
+      </button>
+    </div>
+  </aside>
+
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
